@@ -33,6 +33,12 @@ jobs:
     - name: Make gradlew executable
       run: chmod +x gradlew
 
+    - name: Initialize Gradle Wrapper
+      run: |
+        if [ ! -f gradle/wrapper/gradle-wrapper.jar ] || [ $(stat -c %s gradle/wrapper/gradle-wrapper.jar) -lt 1000 ]; then
+          ./gradlew wrapper --gradle-version 8.3
+        fi
+
     - name: Build debug APK
       run: ./gradlew assembleDebug
 
